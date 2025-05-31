@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { Github } from 'lucide-react';
 import { useGitHub } from '../context/GitHubContext';
 import ThemeToggle from './ThemeToggle';
+import AuthForm from './AuthForm';
 
 interface LayoutProps {
   children: ReactNode;
@@ -38,7 +39,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Main content */}
       <main className="flex-grow">
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          {children}
+          {token ? children : <AuthForm />}
         </div>
       </main>
       

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useGitHub } from '../context/GitHubContext';
 import ReadmeForm from './ReadmeForm';
 import FolderForm from './FolderForm';
-import { ArrowLeft, BookOpen, FolderPlus } from 'lucide-react';
+import TaskReminderManager from './TaskReminderManager';
+import { ArrowLeft, BookOpen, FolderPlus, ListTodo } from 'lucide-react';
 
-type ActionType = 'readme' | 'folder' | null;
+type ActionType = 'readme' | 'folder' | 'task-reminder' | null;
 
 const RepoActions: React.FC = () => {
   const { selectedRepo, setSelectedRepo } = useGitHub();
@@ -39,6 +40,13 @@ const RepoActions: React.FC = () => {
               <FolderPlus className="h-5 w-5 mr-2 text-[#0969da] dark:text-[#58a6ff]" />
               Create New Folder
             </button>
+            <button
+              onClick={() => setCurrentAction('task-reminder')}
+              className="inline-flex items-center px-4 py-3 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0969da] dark:focus:ring-[#58a6ff] dark:focus:ring-offset-gray-900"
+            >
+              <ListTodo className="h-5 w-5 mr-2 text-[#0969da] dark:text-[#58a6ff]" />
+              Manage Tasks and Reminders
+            </button>
           </div>
         </div>
       </div>
@@ -51,6 +59,8 @@ const RepoActions: React.FC = () => {
         return <ReadmeForm onBack={resetAction} />;
       case 'folder':
         return <FolderForm onBack={resetAction} />;
+      case 'task-reminder':
+        return <TaskReminderManager />;
       default:
         return renderActionSelector();
     }
@@ -72,7 +82,7 @@ const RepoActions: React.FC = () => {
           {selectedRepo.fullName}
         </h2>
         <a
-          href={selectedRepo.url}
+          href={selectedRepo.htmlUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-[#0969da] dark:text-[#58a6ff] hover:underline"

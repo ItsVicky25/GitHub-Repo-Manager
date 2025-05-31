@@ -4,7 +4,7 @@ import { Info } from 'lucide-react';
 
 const AuthForm: React.FC = () => {
   const [token, setToken] = useState('');
-  const { authenticate, isLoading } = useGitHub();
+  const { authenticate, isLoading, error } = useGitHub();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +39,13 @@ const AuthForm: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Display Error Message */}
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 rounded-md p-3">
+          <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
